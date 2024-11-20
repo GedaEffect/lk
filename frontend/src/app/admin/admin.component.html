@@ -1,0 +1,35 @@
+<mat-card>
+  <h3>Управление пользователями</h3>
+  <table mat-table [dataSource]="users" class="mat-elevation-z8">
+    <!-- Имя -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Имя </th>
+      <td mat-cell *matCellDef="let user">
+        {{ user.first_name }} {{ user.last_name }}
+      </td>
+    </ng-container>
+
+    <!-- Уровень доступа -->
+    <ng-container matColumnDef="access_level">
+      <th mat-header-cell *matHeaderCellDef> Уровень доступа </th>
+      <td mat-cell *matCellDef="let user">
+        <mat-select [(ngModel)]="user.access_level" (selectionChange)="updateUserRole(user)">
+          <mat-option *ngFor="let level of accessLevels" [value]="level">
+            {{ level }}
+          </mat-option>
+        </mat-select>
+      </td>
+    </ng-container>
+
+    <!-- Отдел -->
+    <ng-container matColumnDef="department">
+      <th mat-header-cell *matHeaderCellDef> Отдел </th>
+      <td mat-cell *matCellDef="let user">
+        <input matInput [(ngModel)]="user.department" (blur)="updateUserRole(user)" />
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['name', 'access_level', 'department']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['name', 'access_level', 'department'];"></tr>
+  </table>
+</mat-card>
